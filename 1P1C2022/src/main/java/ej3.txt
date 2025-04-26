@@ -1,0 +1,34 @@
+**Infix Expression:**
+5 ^ ( 1 - 1 ) ^ ( 3 / 1 ) * 5
+
+**Conversion Rules Recap:**
+- Operands are added directly to the output.
+- When an operator is encountered, pop from the stack if the operator at the top has higher precedence (or equal precedence if left-associative; note: '^' is right-associative).
+- Push left parentheses '(' onto the stack.
+- On encountering a right parenthesis ')', pop until a left parenthesis '(' is found (discard both).
+
+**Step-by-Step Process:**
+
+| Step | Stack State                | Current Token         | Output So Far            |
+|------|---------------------       |---------------        |--------------------------|
+| 1    | _empty_                    | 5                     | 5                        |
+| 2    | ^                          | ^                     | 5                        |
+| 3    | ^ (                        | (                     | 5                        |
+| 4    | ^ (                        | 1                     | 5 1                      |
+| 5    | ^ ( -                      | -                     | 5 1                      |
+| 6    | ^ ( -                      | 1                     | 5 1 1                    |
+| 7    | ^                          | )  → pop '-' then '(' | 5 1 1 -                  |
+| 8    | ^ ^                        | ^                     | 5 1 1 -                  |
+| 9    | ^ ^ (                      | (                     | 5 1 1 -                  |
+| 10   | ^ ^ (                      | 3                     | 5 1 1 - 3                |
+| 11   | ^ ^ ( /                    | /                     | 5 1 1 - 3                |
+| 12   | ^ ^ ( /                    | 1                     | 5 1 1 - 3 1              |
+| 13   | ^ ^                        | )  → pop '/' then '(' | 5 1 1 - 3 1 /            |
+| 14   | _pop until empty; push *_  | *                     | Pop both '^' operators: output becomes "5 1 1 - 3 1 / ^ ^" |
+| 15   | *                          | 5                     | 5 1 1 - 3 1 / ^ ^ 5      |
+| End  | _empty_ (after popping *)  | -                     | Final Output: 5 1 1 - 3 1 / ^ ^ 5 *  |
+
+**Final Postfix Expression:**
+5 1 1 - 3 1 / ^ ^ 5 *
+
+*Note:* In Step 14, while processing '*', we compared '*' with the '^' operators on the stack. Since '^' has higher precedence, both '^' operators were popped (and appended to the output) before '*' was pushed.

@@ -1,0 +1,1 @@
+prefixDir=/Users/guerrerojuli/Documents/ITBA/EDA/Lucene

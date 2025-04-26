@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ar.edu.itba.eda</groupId>
+  <artifactId>AirPollution</artifactId>
+  <version>1</version>
+  
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  
+  <dependencies>
+	  
+	<dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter</artifactId>
+		<version>5.8.2</version>
+		<scope>test</scope>
+	</dependency>
+    
+
+
+ 	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-csv</artifactId>
+	    <version>1.14.0</version>
+	</dependency>
+
+	  <dependency>
+		  <groupId>ar.edu.itba.eda</groupId>
+		  <artifactId>IndexWithArray</artifactId>
+		  <version>1.0.0</version>
+		  <scope>system</scope>
+		  <systemPath>${project.basedir}/lib/IndexWithArray-1.jar</systemPath>
+	  </dependency>
+
+	  <!--
+	  <dependency>
+		  <groupId>ar.edu.itba.eda</groupId>
+		  <artifactId>IndexWithArray</artifactId>
+		  <version>1.0.0</version>
+		  <scope>system</scope>
+		  <systemPath>${project.basedir}/lib/IndexWithArray-2.jar</systemPath>
+	  </dependency>
+	  -->
+
+	
+  </dependencies>
+</project>

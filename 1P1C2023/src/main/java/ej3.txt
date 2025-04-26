@@ -1,0 +1,9 @@
+El método maxSubarraySum recorre una única vez el arreglo, realizando operaciones constantes en cada iteración.
+
+Complejidad temporal:
+- O(n), donde n es la cantidad de elementos del arreglo.
+  Se recorre el arreglo una sola vez, ejecutando operaciones aritméticas y comparaciones en cada iteración.
+
+Complejidad espacial:
+- O(1) (espacio constante).
+  Se utiliza un número fijo de variables (n, maxSum, currentSum), sin importar el tamaño del arreglo.
