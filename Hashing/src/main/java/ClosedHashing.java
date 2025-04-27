@@ -61,8 +61,16 @@ public class ClosedHashing<K, V> implements IndexParametricService<K, V> {
 				}
 			}
 			idx = (idx + 1) % Lookup.length;
-			if (idx == start)
-				throw new RuntimeException("Table is full");
+			if (idx == start) { // full cycle completed
+				if (candidate != -1) {
+					idx = candidate;
+					Lookup[idx] = new Slot<>(key, data);
+					occupiedCount++;
+					break;
+				} else {
+					throw new RuntimeException("Table is full");
+				}
+			}
 		}
 		
 		if (occupiedCount > Lookup.length * MAX_LOAD_FACTOR) {
@@ -176,17 +184,5 @@ public class ClosedHashing<K, V> implements IndexParametricService<K, V> {
 		myHash.dump();
 		
 	}
-	
-/*	
-	public static void main(String[] args) {
-		ClosedHashing<Integer, String> myHash= new ClosedHashing<>(f->f);
-		myHash.insertOrUpdate(55, "Ana");
-		myHash.insertOrUpdate(29, "Victor");
-		myHash.insertOrUpdate(25, "Tomas");
-		myHash.insertOrUpdate(19, "Lucas");
-		myHash.insertOrUpdate(21, "Sol");
-		myHash.dump();
-	}
-*/
 }
 
