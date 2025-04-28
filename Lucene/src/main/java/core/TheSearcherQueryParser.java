@@ -1,6 +1,7 @@
 package core;
 
 
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.search.*;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -37,10 +38,10 @@ public class TheSearcherQueryParser {
         	searcher.setSimilarity(new ClassicSimilarity());
         	
  	
-        	String queryStr= "content:ga~ AND s??re";
+        	String queryStr= "content:Fly OR content:Moon";
         	
         	// Provide a valid field name to the QueryParser
-        	QueryParser queryparser = new QueryParser("content", new StandardAnalyzer());
+        	QueryParser queryparser = new QueryParser("content", new SimpleAnalyzer());
          	Query query= queryparser.parse(queryStr);
         	
         	// run the query

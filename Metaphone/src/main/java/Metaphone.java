@@ -1,19 +1,21 @@
 public class Metaphone {
     public static String metaphone(String word) {
+        // Si la palabra es nula o vacía, retornar cadena vacía
         if (word == null || word.isEmpty()) {
             return "";
         }
 
-        // Convert to uppercase and get characters
+        // Convertir a mayúsculas y obtener caracteres
         word = word.toUpperCase();
         char[] chars = word.toCharArray();
         
-        // Variables for tracking position and building result
+        // Variables para seguimiento de posición y construcción del resultado
         StringBuilder result = new StringBuilder();
         int length = chars.length;
         int current = 0;
         
-        // Skip initial characters according to rules
+        // Saltar caracteres iniciales según reglas específicas
+        // KN, GN, PN, AE, WR, WH al inicio se ignoran
         if (length > 1 && chars[0] == 'K' && chars[1] == 'N') {
             current = 1;
         } else if (length > 1 && chars[0] == 'G' && chars[1] == 'N') {
@@ -28,7 +30,7 @@ public class Metaphone {
             current = 1;
         }
 
-        // Process each character according to Metaphone rules
+        // Procesar cada carácter según las reglas de Metaphone
         while (current < length && result.length() < 4) {
             switch (chars[current]) {
                 case 'A':
@@ -36,24 +38,24 @@ public class Metaphone {
                 case 'I':
                 case 'O':
                 case 'U':
-                    // Rule 1: Vowels are only kept when they are the first letter
+                    // Regla 1: Las vocales solo se mantienen si son la primera letra
                     if (current == 0) {
                         result.append(chars[current]);
                     }
                     break;
 
                 case 'B':
-                    // Rule 2: 'B' -> 'B' unless at the end of word after 'M'
+                    // Regla 2: 'B' -> 'B' a menos que esté al final después de 'M'
                     if (!(current > 0 && chars[current - 1] == 'M' && current == length - 1)) {
                         result.append('B');
                     }
                     break;
 
                 case 'C':
-                    // Rule 3: Various 'C' rules
+                    // Regla 3: Varias reglas para 'C'
                     if (current > 0 && chars[current - 1] == 'S' && current + 1 < length && 
                         (chars[current + 1] == 'I' || chars[current + 1] == 'E' || chars[current + 1] == 'Y')) {
-                        // Skip 'C' in "SCE", "SCI", "SCY"
+                        // Ignorar 'C' en "SCE", "SCI", "SCY"
                     } else if (current + 1 < length && 
                              (chars[current + 1] == 'I' || chars[current + 1] == 'E' || chars[current + 1] == 'Y')) {
                         result.append('S');
@@ -70,7 +72,7 @@ public class Metaphone {
                     break;
 
                 case 'D':
-                    // Rule 4: 'D' -> 'J' if followed by "GE", "GY", "GI", else 'T'
+                    // Regla 4: 'D' -> 'J' si va seguido de "GE", "GY", "GI", sino 'T'
                     if (current + 2 < length && chars[current + 1] == 'G' && 
                         (chars[current + 2] == 'E' || chars[current + 2] == 'Y' || chars[current + 2] == 'I')) {
                         result.append('J');
@@ -81,12 +83,12 @@ public class Metaphone {
                     break;
 
                 case 'F':
-                    // Rule 5: 'F' -> 'F'
+                    // Regla 5: 'F' -> 'F'
                     result.append('F');
                     break;
 
                 case 'G':
-                    // Rule 6: Various 'G' rules
+                    // Regla 6: Varias reglas para 'G'
                     if (current + 1 < length) {
                         if (chars[current + 1] == 'H') {
                             if (current > 0 && !isVowel(chars[current - 1])) {
@@ -102,7 +104,7 @@ public class Metaphone {
                         } else if (chars[current + 1] == 'N') {
                             if (current == length - 2 || 
                                 (current + 2 < length && chars[current + 2] == 'E' && current == length - 3)) {
-                                // Skip GN at end or GNE at end
+                                // Ignorar GN al final o GNE al final
                             } else {
                                 result.append('K');
                             }
@@ -117,7 +119,7 @@ public class Metaphone {
                     break;
 
                 case 'H':
-                    // Rule 7: 'H' is only kept if after vowel and not after C,G,P,S,T
+                    // Regla 7: 'H' solo se mantiene si está después de vocal y no después de C,G,P,S,T
                     if (current > 0 && isVowel(chars[current - 1]) && 
                         (current + 1 >= length || !isVowel(chars[current + 1]))) {
                         result.append('H');
@@ -125,34 +127,34 @@ public class Metaphone {
                     break;
 
                 case 'J':
-                    // Rule 8: 'J' -> 'J'
+                    // Regla 8: 'J' -> 'J'
                     result.append('J');
                     break;
 
                 case 'K':
-                    // Rule 9: 'K' is only kept if not after 'C'
+                    // Regla 9: 'K' solo se mantiene si no está después de 'C'
                     if (current == 0 || chars[current - 1] != 'C') {
                         result.append('K');
                     }
                     break;
 
                 case 'L':
-                    // Rule 10: 'L' -> 'L'
+                    // Regla 10: 'L' -> 'L'
                     result.append('L');
                     break;
 
                 case 'M':
-                    // Rule 11: 'M' -> 'M'
+                    // Regla 11: 'M' -> 'M'
                     result.append('M');
                     break;
 
                 case 'N':
-                    // Rule 12: 'N' -> 'N'
+                    // Regla 12: 'N' -> 'N'
                     result.append('N');
                     break;
 
                 case 'P':
-                    // Rule 13: 'P' -> 'F' if followed by 'H', else 'P'
+                    // Regla 13: 'P' -> 'F' si va seguido de 'H', sino 'P'
                     if (current + 1 < length && chars[current + 1] == 'H') {
                         result.append('F');
                         current++;
@@ -162,17 +164,17 @@ public class Metaphone {
                     break;
 
                 case 'Q':
-                    // Rule 14: 'Q' -> 'K'
+                    // Regla 14: 'Q' -> 'K'
                     result.append('K');
                     break;
 
                 case 'R':
-                    // Rule 15: 'R' -> 'R'
+                    // Regla 15: 'R' -> 'R'
                     result.append('R');
                     break;
 
                 case 'S':
-                    // Rule 16: Special 'S' rules
+                    // Regla 16: Reglas especiales para 'S'
                     if (current + 1 < length && chars[current + 1] == 'H') {
                         result.append('X');
                         current++;
@@ -185,7 +187,7 @@ public class Metaphone {
                     break;
 
                 case 'T':
-                    // Rule 17: Special 'T' rules
+                    // Regla 17: Reglas especiales para 'T'
                     if (current + 1 < length && chars[current + 1] == 'H') {
                         result.append('0');
                         current++;
@@ -198,13 +200,13 @@ public class Metaphone {
                     break;
 
                 case 'V':
-                    // Rule 18: 'V' -> 'F'
+                    // Regla 18: 'V' -> 'F'
                     result.append('F');
                     break;
 
                 case 'W':
                 case 'Y':
-                    // Rule 19: 'W' and 'Y' are kept if followed by a vowel
+                    // Regla 19: 'W' y 'Y' se mantienen si van seguidas de vocal
                     if (current + 1 < length && isVowel(chars[current + 1])) {
                         result.append(chars[current]);
                     }
@@ -226,6 +228,7 @@ public class Metaphone {
         return result.toString();
     }
 
+    // Método auxiliar para verificar si un carácter es vocal
     private static boolean isVowel(char c) {
         return "AEIOU".indexOf(c) != -1;
     }
