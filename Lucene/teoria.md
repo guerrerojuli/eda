@@ -127,6 +127,31 @@ Hay dos formas principales de crear consultas:
 
 **5. Scoring (Ranking)**
 
-Lucene calcula una puntuación (`score`) para determinar la relevancia de cada documento respecto a la consulta. La fórmula clásica (TF-IDF) considera la frecuencia del término en el documento (TF) y cuán raro es el término en toda la colección (IDF), ajustado por la longitud del campo. Consultas como `WildcardQuery` o `FuzzyQuery` suelen tener un scoring más simple. Se puede obtener una explicación detallada del cálculo con `searcher.explain(query, docID)`.
+Lucene calcula una puntuación (`score`) para determinar la relevancia de cada documento respecto a la consulta. La fórmula clásica (TF-IDF) considera la frecuencia del término en el documento (TF) y cuán raro es el término en toda la colección (IDF), ajustado por la longitud del campo. Se puede obtener una explicación detallada del cálculo con `searcher.explain(query, docID)`.
+
+El cálculo del score se basa en varios componentes:
+- TF (Term Frequency): Mide cuántas veces aparece un término en un documento.
+- IDF (Inverse Document Frequency): Mide la importancia del término según su rareza en la colección.
+- Norms: Factores que penalizan documentos largos.
+- Otros ajustes: Dependiendo del Similarity utilizado (por ejemplo, BM25 o ClassicSimilarity), se pueden introducir factores adicionales.
+
+Estos componentes se combinan para producir un score final usado para rankear los documentos.
+
+La fórmula clásica de Lucene para calcular el score de un documento respecto a una consulta de un término es la siguiente:
+
+score(DOC, term) = tf * idf * norm
+
+donde:
+- tf es la frecuencia del término en el documento, ajustada (por ejemplo, usando la raíz cuadrada de la frecuencia relativa del término en el documento).
+- idf es la frecuencia inversa de documentos, que mide cuán raro es el término en la colección. Se calcula como:
+  idf = 1 + loge((1 + número de documentos en la colección) / (1 + número de documentos que contienen el término))
+- norm es un factor de normalización que penaliza documentos largos y puede incluir otros ajustes.
+
+Por ejemplo, para un término en una consulta, el score se calcula así:
+
+score(DOC, term) = sqrt(frecuencia del término en el documento / cantidad total de términos en el documento) * (1 + loge((1 + número de documentos en la colección) / (1 + número de documentos que contienen el término))) * norm
+
+Esta fórmula permite que Lucene determine qué tan relevante es un documento para una consulta dada, combinando la importancia local y global del término, y ajustando por la longitud del documento.
 
 Este resumen integra los conceptos clave de Lucene con ejemplos de código ilustrativos para la indexación, análisis y búsqueda.
+`
