@@ -43,6 +43,66 @@ Consideremos el patrón "ABABC" y el texto "ABABABC":
 2. Búsqueda:
    - Se encuentra el patrón en la posición 2 del texto.
 
+## Ejemplo Detallado de Seguimiento
+
+Consideremos el patrón "ABABC" y el texto "ABABABC". Vamos a seguir paso a paso la ejecución del algoritmo KMP.
+
+### Fase de Preprocesamiento (Construcción del array LPS)
+
+Para el patrón "ABABC":
+1. Inicializamos LPS = [0, 0, 0, 0, 0]
+2. i = 1, len = 0:
+   - Compara 'B' (i=1) con 'A' (len=0) → No coinciden
+   - LPS[1] = 0
+3. i = 2, len = 0:
+   - Compara 'A' (i=2) con 'A' (len=0) → Coinciden
+   - len = 1
+   - LPS[2] = 1
+4. i = 3, len = 1:
+   - Compara 'B' (i=3) con 'B' (len=1) → Coinciden
+   - len = 2
+   - LPS[3] = 2
+5. i = 4, len = 2:
+   - Compara 'C' (i=4) con 'A' (len=2) → No coinciden
+   - len = LPS[1] = 0
+   - LPS[4] = 0
+
+Array LPS final: [0, 0, 1, 2, 0]
+
+### Fase de Búsqueda
+
+Texto: A B A B A B C
+Patrón: A B A B C
+LPS: [0, 0, 1, 2, 0]
+
+1. i = 0, j = 0:
+   - Compara 'A' con 'A' → Coinciden
+   - i = 1, j = 1
+2. i = 1, j = 1:
+   - Compara 'B' con 'B' → Coinciden
+   - i = 2, j = 2
+3. i = 2, j = 2:
+   - Compara 'A' con 'A' → Coinciden
+   - i = 3, j = 3
+4. i = 3, j = 3:
+   - Compara 'B' con 'B' → Coinciden
+   - i = 4, j = 4
+5. i = 4, j = 4:
+   - Compara 'A' con 'C' → No coinciden
+   - j = LPS[3] = 2
+6. i = 4, j = 2:
+   - Compara 'A' con 'A' → Coinciden
+   - i = 5, j = 3
+7. i = 5, j = 3:
+   - Compara 'B' con 'B' → Coinciden
+   - i = 6, j = 4
+8. i = 6, j = 4:
+   - Compara 'C' con 'C' → Coinciden
+   - j = 5 (igual a longitud del patrón)
+   - ¡Patrón encontrado en la posición i - j = 2!
+
+El algoritmo encuentra el patrón "ABABC" en la posición 2 del texto "ABABABC". Este ejemplo muestra cómo el array LPS ayuda a evitar comparaciones innecesarias, permitiendo saltos inteligentes en el texto cuando se detecta un desacuerdo.
+
 ## Implementación
 La implementación incluye:
 - `nextComputation`: Preprocesa el patrón y construye el array LPS.
