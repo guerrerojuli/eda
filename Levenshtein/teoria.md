@@ -10,6 +10,38 @@ La distancia de Levenshtein es una métrica que mide la **similitud entre dos ca
     3.  calla -> calle (sustituir 'a' por 'e')
         Se necesitan 3 operaciones. La distancia de Levenshtein es 3.
 
+**1.1 Fórmulas Fundamentales**
+
+* **Distancia de Levenshtein:**
+La fórmula recursiva para calcular la distancia de Levenshtein entre dos cadenas S1 y S2 es:
+
+```
+Levenshtein(i,j) = min(
+    Levenshtein(i-1,j) + 1,           // Eliminación
+    Levenshtein(i,j-1) + 1,           // Inserción
+    Levenshtein(i-1,j-1) + cost       // Sustitución
+)
+
+donde:
+- i es la posición en S1
+- j es la posición en S2
+- cost = 0 si S1[i] = S2[j]
+- cost = 1 si S1[i] ≠ S2[j]
+```
+
+* **Distancia Normalizada:**
+Para obtener un valor entre 0 y 1, donde 1 indica coincidencia exacta:
+
+```
+LevenshteinNormalizado(S1,S2) = 1 - Levenshtein(S1,S2) / max(S1.length, S2.length)
+```
+
+Esta normalización garantiza que:
+- El resultado está entre 0 y 1
+- 1 significa que las cadenas son idénticas
+- 0 significa que las cadenas son completamente diferentes
+- Valores intermedios indican grados de similitud
+
 **2. El Algoritmo (Wagner-Fischer con Programación Dinámica)**
 
 La forma más común y eficiente de calcular la distancia de Levenshtein es mediante programación dinámica, utilizando el algoritmo propuesto por Wagner y Fischer.

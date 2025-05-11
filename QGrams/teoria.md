@@ -15,6 +15,39 @@ Q-Grams (q=2): HO OL LA
 
 Cada Q-Gram se genera deslizando una ventana de tamaño q sobre el texto.
 
+### Ejemplo Detallado con Q=3
+
+Consideremos la comparación entre "JOHN" y "JOE":
+
+```
+Q-Grams (JOHN) con Q=3:
+- ##J (padding inicial)
+- #JO
+- JOH
+- OHN
+- HN#
+- N## (padding final)
+
+Q-Grams (JOE) con Q=3:
+- ##J (padding inicial)
+- #JO
+- JOE
+- OE#
+- E## (padding final)
+```
+
+En este ejemplo:
+1. Usamos '#' para el padding (relleno) al inicio y final
+2. Q-Grams en común: "##J", "#JO" (2 en total)
+3. Total de Q-Grams: 6 (JOHN) + 5 (JOE) = 11
+4. Q-Grams no compartidos: 7 (11 - 2*2)
+5. Cálculo de similitud: (11 - 7) / 11 ≈ 0.3636
+
+Nota importante: Si dos strings tuvieran TODOS sus Q-grams en común (matching exacto), la fórmula resultaría en:
+(N + N - 0) / (N + N) = 1, donde N es el número de Q-grams de cada string.
+
+La similitud resultante siempre estará entre 0 (ninguna similitud) y 1 (similitud máxima).
+
 ## Aplicación en Comparación de Strings
 
 Los Q-Grams son particularmente útiles para medir la similitud entre dos strings. Veamos un ejemplo:

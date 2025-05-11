@@ -38,10 +38,10 @@ public class TheSearcherQueryParser {
         	searcher.setSimilarity(new ClassicSimilarity());
         	
  	
-        	String queryStr= "content:Fly OR content:Moon";
+        	String queryStr= "content:\"review game game,\" OR content:\",,store,,game\"";
         	
         	// Provide a valid field name to the QueryParser
-        	QueryParser queryparser = new QueryParser("content", new SimpleAnalyzer());
+        	QueryParser queryparser = new QueryParser("content", new StandardAnalyzer());
          	Query query= queryparser.parse(queryStr);
         	
         	// run the query

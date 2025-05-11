@@ -1,1 +1,1 @@
-prefixDir=/Users/guerrerojuli/Documents/ITBA/EDA/Lucene
+prefixDir=/Users/guerrerojuli/itba/eda/Lucene

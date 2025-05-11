@@ -1,0 +1,13 @@
+jguerrero
+
+3.1)
+"content:IEDO~ AND content:[PI TO SOS]"
+El único archivo que devuelve es "d.txt" ya que:
+- IEDO~ coincide según la búsqueda aproximada con "video".
+- [PI TO SOS] coincide según la busqueda por rangos con "review"
+
+
+3.2)
+"content:\"review game game,\" OR content:\",,store,,game\""
+El único archivo que devuelve es "a.txt" ya que:
+- ",,sotre,,game" coincide según busqueda de texto (recordemos que ingora los signos de puntuaión por lo que buscará "store game").

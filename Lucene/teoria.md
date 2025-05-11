@@ -147,9 +147,14 @@ donde:
   idf = 1 + loge((1 + número de documentos en la colección) / (1 + número de documentos que contienen el término))
 - norm es un factor de normalización que penaliza documentos largos y puede incluir otros ajustes.
 
+**Combinación de Scores en Operaciones Booleanas:**
+- En operaciones **OR** (BooleanClause.Occur.SHOULD), los scores de cada término coincidente se suman. Por ejemplo, si un documento coincide con los términos "game" (score=0.8) y "store" (score=0.6), su score final será 1.4.
+- En operaciones **AND** (BooleanClause.Occur.MUST), también se suman los scores de los términos coincidentes. La diferencia con OR es que en AND todos los términos deben coincidir para que el documento sea considerado relevante.
+- En operaciones **NOT** (BooleanClause.Occur.MUST_NOT), los términos excluidos no contribuyen al score final.
+
 Por ejemplo, para un término en una consulta, el score se calcula así:
 
-score(DOC, term) = sqrt(frecuencia del término en el documento / cantidad total de términos en el documento) * (1 + loge((1 + número de documentos en la colección) / (1 + número de documentos que contienen el término))) * norm
+score(DOC, term) = sqrt(frecuencia del término en el documento / cantidad total de términos en el documento) * (1 + loge((1 + número de documentos en la colección) / (1 + número de documentos que contienen el término))) * norm (norm no se usa)
 
 Esta fórmula permite que Lucene determine qué tan relevante es un documento para una consulta dada, combinando la importancia local y global del término, y ajustando por la longitud del documento.
 
