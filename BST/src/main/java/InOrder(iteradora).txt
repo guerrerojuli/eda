@@ -1,0 +1,17 @@
+// version iterativa
+public void inOrderIter() {
+	Stack<NodeTreeInterface<T>> stack=  new Stack<>();
+		  
+	  NodeTreeInterface<T> current = root; 
+	  while ( ! stack.isEmpty() || current != null) { 
+		  if (current != null) { 
+			  stack.push(current); 
+			  current= current.getLeft(); 
+		  } 
+		  else { 
+			  NodeTreeInterface<T> elementToProcess = stack.pop(); 
+			  System.out.print(elementToProcess.getData() + "\t"); 
+			  current= elementToProcess.getRight(); 
+		  }
+	  } 
+}
